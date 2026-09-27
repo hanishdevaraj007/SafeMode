@@ -1,0 +1,32 @@
+{
+  "run_id": "fda286d7-7d3d-4af3-9d77-24103bad700a",
+  "scenario": "BENIGN_BULK_COPY",
+  "scenario_type": "BENIGN",
+  "detector_mode": "STATEFUL_MULTI_TIMESCALE",
+  "detector_version": "SM-AY26-FINAL-v1",
+  "duration_seconds": 5.19,
+  "outcome": {
+    "high_confidence_reached": false,
+    "first_high_confidence_time_seconds": null,
+    "final_state": "SUSPICIOUS",
+    "max_score": 41.0,
+    "decoy_interaction": false
+  },
+  "files": {
+    "intended": 10,
+    "affected": 18
+  },
+  "resource_usage": {
+    "average_cpu_percent": 68.0,
+    "max_cpu_percent": 103.8,
+    "average_rss_mb": 71.6,
+    "max_rss_mb": 71.69
+  },
+  "containment": {
+    "requested": true,
+    "action": "DRY_RUN",
+    "result": "SUCCESS"
+  },
+  "validity": "SUCCESS",
+  "error_message": null
+}

@@ -1,0 +1,18 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# SafeMode Lab directory transient files
+lab/
+
+# Data directory transient logs (preserve results CSVs and figures)
+data/events/
+data/decisions/
+data/resources/
+data/experiments/
+
+# IDE files
+.vscode/
+.idea/

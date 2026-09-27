@@ -1,0 +1,32 @@
+{
+  "run_id": "ec8aab46-c6a3-4254-9f95-409d499e686b",
+  "scenario": "BENIGN_DOCUMENT_EDIT",
+  "scenario_type": "BENIGN",
+  "detector_mode": "STATEFUL_MULTI_TIMESCALE",
+  "detector_version": "SM-AY26-FINAL-v1",
+  "duration_seconds": 5.03,
+  "outcome": {
+    "high_confidence_reached": false,
+    "first_high_confidence_time_seconds": null,
+    "final_state": "OBSERVING",
+    "max_score": 15.0,
+    "decoy_interaction": false
+  },
+  "files": {
+    "intended": 1,
+    "affected": 1
+  },
+  "resource_usage": {
+    "average_cpu_percent": 42.42,
+    "max_cpu_percent": 103.6,
+    "average_rss_mb": 71.44,
+    "max_rss_mb": 71.86
+  },
+  "containment": {
+    "requested": true,
+    "action": "DRY_RUN",
+    "result": "SUCCESS"
+  },
+  "validity": "SUCCESS",
+  "error_message": null
+}

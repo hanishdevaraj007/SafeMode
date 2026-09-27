@@ -1,0 +1,33 @@
+{
+  "run_id": "0efad1ed-e695-4e5c-9f62-f54e64dd68f7",
+  "scenario": "BENIGN_COMPRESSION",
+  "scenario_type": "BENIGN",
+  "detector_mode": "STATEFUL_MULTI_TIMESCALE",
+  "detector_version": "SM-AY26-P3-v1",
+  "configuration_version": "v1.0",
+  "random_seed": 42,
+  "workload_parameters": {},
+  "start_time": 1790512813.3848736,
+  "end_time": 1790512816.2165136,
+  "duration": 2.8316400051116943,
+  "target_directory": "D:\\Innovation_lab\\lab",
+  "number_of_files_intended": 10,
+  "number_of_files_affected": 0,
+  "workload_pid": 7204,
+  "process_executable": "C:\\Users\\ASUS\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+  "containment_policy": "DRY_RUN",
+  "host_info": {
+    "system": "Windows",
+    "release": "11",
+    "version": "10.0.26200",
+    "machine": "AMD64",
+    "python_version": "3.14.6"
+  },
+  "result_file_paths": {
+    "events_log": "D:\\Innovation_lab\\data\\events\\0efad1ed-e695-4e5c-9f62-f54e64dd68f7_events.jsonl",
+    "decisions_log": "D:\\Innovation_lab\\data\\events\\0efad1ed-e695-4e5c-9f62-f54e64dd68f7_decisions.jsonl",
+    "resources_log": "D:\\Innovation_lab\\data\\resources\\0efad1ed-e695-4e5c-9f62-f54e64dd68f7_resources.jsonl",
+    "manifest": "D:\\Innovation_lab\\data\\experiments\\0efad1ed-e695-4e5c-9f62-f54e64dd68f7_manifest.json",
+    "outcome": "D:\\Innovation_lab\\data\\experiments\\0efad1ed-e695-4e5c-9f62-f54e64dd68f7_outcome.json"
+  }
+}

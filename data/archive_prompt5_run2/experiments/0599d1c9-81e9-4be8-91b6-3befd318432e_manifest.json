@@ -1,0 +1,33 @@
+{
+  "run_id": "0599d1c9-81e9-4be8-91b6-3befd318432e",
+  "scenario": "MIXED_BEHAVIOR",
+  "scenario_type": "ATTACK_SIMULATION",
+  "detector_mode": "STATEFUL_MULTI_TIMESCALE",
+  "detector_version": "SM-AY26-FINAL-v1",
+  "configuration_version": "v1.0",
+  "random_seed": 42,
+  "workload_parameters": {},
+  "start_time": 1790515029.9063919,
+  "end_time": 1790515032.63413,
+  "duration": 2.72773814201355,
+  "target_directory": "D:\\Innovation_lab\\lab",
+  "number_of_files_intended": 10,
+  "number_of_files_affected": 16,
+  "workload_pid": 8040,
+  "process_executable": "C:\\Users\\ASUS\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+  "containment_policy": "DRY_RUN",
+  "host_info": {
+    "system": "Windows",
+    "release": "11",
+    "version": "10.0.26200",
+    "machine": "AMD64",
+    "python_version": "3.14.6"
+  },
+  "result_file_paths": {
+    "events_log": "D:\\Innovation_lab\\data\\events\\0599d1c9-81e9-4be8-91b6-3befd318432e_events.jsonl",
+    "decisions_log": "D:\\Innovation_lab\\data\\events\\0599d1c9-81e9-4be8-91b6-3befd318432e_decisions.jsonl",
+    "resources_log": "D:\\Innovation_lab\\data\\resources\\0599d1c9-81e9-4be8-91b6-3befd318432e_resources.jsonl",
+    "manifest": "D:\\Innovation_lab\\data\\experiments\\0599d1c9-81e9-4be8-91b6-3befd318432e_manifest.json",
+    "outcome": "D:\\Innovation_lab\\data\\experiments\\0599d1c9-81e9-4be8-91b6-3befd318432e_outcome.json"
+  }
+}

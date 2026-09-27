@@ -1,0 +1,32 @@
+{
+  "run_id": "7f140272-1f76-434f-bbe6-d7741a35340a",
+  "scenario": "RENAME_HEAVY",
+  "scenario_type": "ATTACK_SIMULATION",
+  "detector_mode": "STATEFUL_MULTI_TIMESCALE",
+  "detector_version": "SM-AY26-FINAL-v1",
+  "duration_seconds": 8.49,
+  "outcome": {
+    "high_confidence_reached": true,
+    "first_high_confidence_time_seconds": 6.09,
+    "final_state": "CONTAINMENT_PENDING",
+    "max_score": 100.0,
+    "decoy_interaction": false
+  },
+  "files": {
+    "intended": 15,
+    "affected": 35
+  },
+  "resource_usage": {
+    "average_cpu_percent": 76.3,
+    "max_cpu_percent": 106.7,
+    "average_rss_mb": 25.73,
+    "max_rss_mb": 26.38
+  },
+  "containment": {
+    "requested": true,
+    "action": "DRY_RUN",
+    "result": "SUCCESS"
+  },
+  "validity": "SUCCESS",
+  "error_message": null
+}

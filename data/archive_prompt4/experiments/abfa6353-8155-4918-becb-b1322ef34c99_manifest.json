@@ -1,0 +1,33 @@
+{
+  "run_id": "abfa6353-8155-4918-becb-b1322ef34c99",
+  "scenario": "BENIGN_RENAME_BATCH",
+  "scenario_type": "BENIGN",
+  "detector_mode": "SHORT_WINDOW_BASELINE",
+  "detector_version": "SM-AY26-P3-v1",
+  "configuration_version": "v1.0",
+  "random_seed": 42,
+  "workload_parameters": {},
+  "start_time": 1790512827.3248386,
+  "end_time": 1790512828.9466827,
+  "duration": 1.6218440532684326,
+  "target_directory": "D:\\Innovation_lab\\lab",
+  "number_of_files_intended": 10,
+  "number_of_files_affected": 0,
+  "workload_pid": 13320,
+  "process_executable": "C:\\Users\\ASUS\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+  "containment_policy": "DRY_RUN",
+  "host_info": {
+    "system": "Windows",
+    "release": "11",
+    "version": "10.0.26200",
+    "machine": "AMD64",
+    "python_version": "3.14.6"
+  },
+  "result_file_paths": {
+    "events_log": "D:\\Innovation_lab\\data\\events\\abfa6353-8155-4918-becb-b1322ef34c99_events.jsonl",
+    "decisions_log": "D:\\Innovation_lab\\data\\events\\abfa6353-8155-4918-becb-b1322ef34c99_decisions.jsonl",
+    "resources_log": "D:\\Innovation_lab\\data\\resources\\abfa6353-8155-4918-becb-b1322ef34c99_resources.jsonl",
+    "manifest": "D:\\Innovation_lab\\data\\experiments\\abfa6353-8155-4918-becb-b1322ef34c99_manifest.json",
+    "outcome": "D:\\Innovation_lab\\data\\experiments\\abfa6353-8155-4918-becb-b1322ef34c99_outcome.json"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "run_id": "2a5e6439-021b-47a8-affc-05aa8915e4f3",
+  "scenario": "BENIGN_BACKUP_STYLE",
+  "scenario_type": "BENIGN",
+  "detector_mode": "SHORT_WINDOW_BASELINE",
+  "detector_version": "SM-AY26-FINAL-v1",
+  "duration_seconds": 5.83,
+  "outcome": {
+    "high_confidence_reached": false,
+    "first_high_confidence_time_seconds": null,
+    "final_state": "IDLE",
+    "max_score": 0.0,
+    "decoy_interaction": false
+  },
+  "files": {
+    "intended": 10,
+    "affected": 6
+  },
+  "resource_usage": {
+    "average_cpu_percent": 63.55,
+    "max_cpu_percent": 110.3,
+    "average_rss_mb": 67.63,
+    "max_rss_mb": 67.94
+  },
+  "containment": {
+    "requested": true,
+    "action": "DRY_RUN",
+    "result": "FAILED"
+  },
+  "validity": "FAILED",
+  "error_message": null
+}

@@ -1,0 +1,32 @@
+{
+  "run_id": "c013fa60-573b-4b7f-a3f0-01074442be4b",
+  "scenario": "INTERMITTENT_TRANSFORMATION",
+  "scenario_type": "ATTACK_SIMULATION",
+  "detector_mode": "SHORT_WINDOW_BASELINE",
+  "detector_version": "SM-AY26-FINAL-v1",
+  "duration_seconds": 21.27,
+  "outcome": {
+    "high_confidence_reached": false,
+    "first_high_confidence_time_seconds": null,
+    "final_state": "IDLE",
+    "max_score": 75.0,
+    "decoy_interaction": false
+  },
+  "files": {
+    "intended": 12,
+    "affected": 36
+  },
+  "resource_usage": {
+    "average_cpu_percent": 60.12,
+    "max_cpu_percent": 103.1,
+    "average_rss_mb": 71.96,
+    "max_rss_mb": 72.17
+  },
+  "containment": {
+    "requested": true,
+    "action": "DRY_RUN",
+    "result": "SUCCESS"
+  },
+  "validity": "SUCCESS",
+  "error_message": null
+}
