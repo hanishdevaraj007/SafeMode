@@ -28,34 +28,71 @@ A deterministic, rule-explainable behavioral detection framework featuring:
 
 ## 2. System Architecture
 
+SafeMode processes Windows file-system activity through a sequence of detection, correlation, and safety stages. The design separates short-term event observation from longer-term campaign memory so that related activity can still be correlated when it occurs in separated bursts.
+
+### Processing Flow
+
+```text
+Windows File-System Activity
+            |
+            v
+1. Event Collection
+   Watchdog captures file-system events
+            |
+            v
+2. Temporal Event Buffer
+   Maintains recent events within a configurable
+   short-term observation window
+            |
+            v
+3. Signal Extraction
+   Converts raw events into behavioral signals
+   such as decoy interaction, rapid transformation,
+   rename, delete, and multi-file activity
+            |
+            v
+4. Campaign Memory
+   Retains relevant evidence across longer periods
+   using evidence deduplication, exponential decay,
+   and hysteresis
+            |
+            v
+5. Correlation Engine
+   Combines current and historical evidence and
+   produces an explainable detection decision
+            |
+            v
+6. Response Manager
+   Applies safety gates before any containment action
+   and records the resulting response decision
+            |
+            v
+Decision + Structured Audit Evidence
 ```
-Filesystem Events (watchdog API)
-            Ã¢â€â€š
-            Ã¢â€“Â¼
-Ã¢â€Å’Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â
-Ã¢â€â€š     Temporal Event Buffer     Ã¢â€â€š (Configurable sliding window, e.g. 5.0s)
-Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Ëœ
-               Ã¢â€â€š
-               Ã¢â€“Â¼
-Ã¢â€Å’Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â
-Ã¢â€â€š       Signal Extractor        Ã¢â€â€š (DECOY, RAPID_MOD, RENAME, DELETE, MULTI_FILE)
-Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Ëœ
-               Ã¢â€â€š
-               Ã¢â€“Â¼
-Ã¢â€Å’Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â
-Ã¢â€â€š   Campaign Memory (Stateful)  Ã¢â€â€š (Evidence deduplication, exponential decay,
-Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Ëœ  hysteresis, bounded 0Ã¢â‚¬â€œ100 risk score)
-               Ã¢â€â€š
-               Ã¢â€“Â¼
-Ã¢â€Å’Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â
-Ã¢â€â€š      Correlation Engine       Ã¢â€â€š (Explainable decision generation & state updates)
-Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Ëœ
-               Ã¢â€â€š
-               Ã¢â€“Â¼
-Ã¢â€Å’Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Â
-Ã¢â€â€š       Response Manager        Ã¢â€â€š (Gates S1Ã¢â‚¬â€œS14: verified process registry required;
-Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€Ëœ  fail-safe DRY_RUN default)
-```
+
+### Main Components
+
+| Component                 | Purpose                                                                             |
+| ------------------------- | ----------------------------------------------------------------------------------- |
+| **Event Collection**      | Captures file-system activity generated inside the isolated laboratory              |
+| **Temporal Event Buffer** | Maintains recent events for short-window behavioral analysis                        |
+| **Signal Extraction**     | Converts raw file activity into security-relevant behavioral signals                |
+| **Campaign Memory**       | Preserves relevant evidence across separated activity bursts                        |
+| **Correlation Engine**    | Combines signals and campaign history to generate explainable risk decisions        |
+| **Response Manager**      | Enforces process and laboratory safety controls before a response action            |
+| **Telemetry**             | Records CPU, memory, process, and execution measurements                            |
+| **Structured Storage**    | Preserves events, decisions, manifests, and experiment outcomes for reproducibility |
+
+### Detection and Response Model
+
+SafeMode uses two detector modes during experimental evaluation:
+
+* **SHORT_WINDOW_BASELINE** — evaluates behavior using the short-term observation window.
+* **STATEFUL_MULTI_TIMESCALE** — additionally retains relevant historical evidence through campaign memory.
+
+The response layer is deliberately fail-safe. A containment action must pass laboratory-boundary, process-identity, executable-identity, and workload-registration checks before an actual process-control operation is permitted.
+
+The current prototype is deterministic and rule-explainable. It does not use machine-learning inference or require a training dataset.
 
 ---
 
@@ -82,13 +119,13 @@ python -m app lab init
 ```bash
 pytest
 ```
-*Executes all 35 tests, including S1Ã¢â‚¬â€œS14 security validation gates, metric invariants, and result consistency checks.*
+*Executes all 35 tests, including S1-S14 security validation gates, metric invariants, and result consistency checks.*
 
 ### Step 4: Execute Benchmark Evaluation Matrix
 ```bash
 python -m app experiment run
 ```
-*Executes 22 paired experiment runs (11 scenarios Ãƒâ€” 2 detector modes) tracking telemetry, manifests, and resource usage.*
+*Executes 22 paired experiment runs (11 scenarios * 2 detector modes) tracking telemetry, manifests, and resource usage.*
 
 ### Step 5: Aggregate Results & Generate Visualizations
 ```bash
@@ -116,51 +153,95 @@ python scripts/validate_results_consistency.py
 | **Mean Process RSS Memory** | 71.22 MB | 72.24 MB | Minimal memory divergence between modes |
 | **Mean CPU Utilization** | 38.80% | 33.56% | Single-core burst processing overhead |
 
-*Full evaluation tables, traces, and latency graphs are documented in [`docs/research/final_results.md`](file:///D:/Innovation_lab/docs/research/final_results.md).*
+*Full evaluation tables, traces, and latency graphs are documented in [`docs/research/final_results.md`](docs/research/final_results.md).*
 
 ---
 
 ## 5. Security & Safety Gates
 
 SafeMode incorporates 14 automated security verification gates (`S1` through `S14`):
-- **S1Ã¢â‚¬â€œS2:** Strict lab boundary canonicalization and workload whitelisting.
-- **S3Ã¢â‚¬â€œS5:** Containment restricted to registered lab subprocesses; identity & executable verification.
-- **S6Ã¢â‚¬â€œS8:** Prevention of out-of-boundary file modification, path traversal (`..`), or external cleanup.
+- **S1-S2:** Strict lab boundary canonicalization and workload whitelisting.
+- **S3-S5:** Containment restricted to registered lab subprocesses; identity & executable verification.
+- **S6-S8:** Prevention of out-of-boundary file modification, path traversal (`..`), or external cleanup.
 - **S9:** Disallowance of arbitrary shell command syntax (`shell=False` strictly enforced).
-- **S10Ã¢â‚¬â€œS11:** Creation time validation (>2.0s drift rejected) and PID reuse lifecycle protection.
+- **S10-S11:** Creation time validation (>2.0s drift rejected) and PID reuse lifecycle protection.
 - **S12:** Non-interfering coexistence with active Microsoft Defender Antivirus.
-- **S13Ã¢â‚¬â€œS14:** Workload run UUID isolation and fail-safe configuration defaults (`lab_mode=False`).
+- **S13-S14:** Workload run UUID isolation and fail-safe configuration defaults (`lab_mode=False`).
 
-*Detailed test logs and audit evidence are in [`docs/security/final_security_validation.md`](file:///D:/Innovation_lab/docs/security/final_security_validation.md).*
+*Detailed test logs and audit evidence are in [`docs/security/final_security_validation.md`](docs/security/final_security_validation.md).*
 
 ---
 
 ## 6. Repository Layout
 
+The repository is separated into detection code, safety controls, experiment workloads, evidence, validation, and research documentation.
+
+```text
+SafeMode/
+|
++-- app/
+|   Core SafeMode application
+|
+|   +-- correlation/       Event buffering and campaign memory
+|   +-- detection/         Behavioral signal extraction and correlation
+|   +-- experiment/        Experiment execution and metric processing
+|   +-- models/            Event and decision data structures
+|   +-- response/          Safety-gated response handling
+|   +-- storage/           Structured event and decision logging
+|   +-- telemetry/         Process context and resource monitoring
+|   +-- utils/             Path and security validation helpers
+|   +-- workloads/         Controlled benign and adversarial workloads
+|   +-- config.py          Central detector configuration
+|   +-- __main__.py        Command-line interface
+|
++-- lab/
+|   Controlled SafeMode laboratory environment
+|
+|   +-- decoys/            Synthetic canary files
+|   +-- protected/         Protected laboratory content
+|   +-- runs/              Run-specific laboratory data
+|   +-- workloads/         Generated workload data
+|
++-- data/
+|   Experimental evidence and generated research outputs
+|
+|   +-- events/            Raw event and decision traces
+|   +-- experiments/       Experiment manifests and outcome records
+|   +-- resources/         CPU and memory telemetry
+|   +-- results/           Validated CSV result tables
+|   +-- figures/           Research charts
+|   +-- archive_prompt4/   Preserved development/provenance records
+|
++-- docs/
+|   Project and research documentation
+|
+|   +-- research/          Results, scope, methodology, limitations
+|   +-- security/          Security validation and code-audit records
+|
++-- scripts/
+|   Validation and analysis utilities
+|
+|   +-- validate_results_consistency.py
+|
++-- tests/
+|   Automated tests covering functionality and security gates
+|
++-- requirements.txt
+|   Python dependency specification
+|
++-- README.md
+    Project description and reproducibility instructions
 ```
-D:\Innovation_lab
-Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ app/                      # Core detection engine & CLI
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ config.py             # Central configuration (v1.0 / SM-AY26-FINAL-v1)
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ correlation/          # Temporal buffer, stateful memory, pipeline
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ detection/            # Signal extraction, decoys, correlation engine
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ experiment/           # Runner, metrics, aggregator, analysis
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ models/               # Structured event & decision schemas
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ response/             # Gated containment actions (S1-S14)
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ storage/              # JSONL structured event/decision logger
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ telemetry/            # Watchdog monitor, process context & registry
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ utils/                # Canonical path validation & security helpers
-Ã¢â€â€š   Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ workloads/            # Synthetic adversarial & benign benchmark workloads
-Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ data/
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ archive_prompt4/      # Preserved Prompt 4 records (provenance)
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ events/               # Run-specific JSONL event & decision logs
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ experiments/          # Outcome & manifest JSON records (22 runs)
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ figures/              # 5 publication charts
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ resources/            # Resource utilization telemetry (200ms)
-Ã¢â€â€š   Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ results/              # Validated CSV tables (experiments, metrics, summary)
-Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ docs/
-Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ research/             # final_results.md, current_scope.md, limitations.md
-Ã¢â€â€š   Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ security/             # final_security_validation.md, final_code_audit.md
-Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ scripts/                  # validate_results_consistency.py
-Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ tests/                    # 35 automated pytest validation tests
-Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ requirements.txt          # Python dependencies
-```
+
+### Useful Locations During Evaluation
+
+| Need                                | Location                                  |
+| ----------------------------------- | ----------------------------------------- |
+| Understand the detector             | `app/`                                    |
+| Run controlled workloads            | `app/workloads/`                          |
+| Inspect raw evidence                | `data/events/` and `data/experiments/`    |
+| Review research results             | `data/results/` and `docs/research/`      |
+| Review security verification        | `tests/` and `docs/security/`             |
+| Reproduce result consistency checks | `scripts/validate_results_consistency.py` |
+
+This structure keeps **implementation**, **experimental evidence**, and **validation evidence** separate, making the prototype easier to inspect and reproduce.
