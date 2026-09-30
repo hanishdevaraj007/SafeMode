@@ -194,6 +194,11 @@ SafeMode/
 |   +-- config.py          Central detector configuration
 |   +-- __main__.py        Command-line interface
 |
++-- DEMO/
+|   Submission demo status placeholder
+|
+|   +-- README.txt         Status notice regarding demo video
+|
 +-- lab/
 |   Controlled SafeMode laboratory environment
 |
@@ -218,10 +223,19 @@ SafeMode/
 |   +-- research/          Results, scope, methodology, limitations
 |   +-- security/          Security validation and code-audit records
 |
++-- evidence/
+|   Evaluation logs and system screenshots
+|
+|   +-- logs/              Formatted decision trace logs and audit outputs
+|   +-- screenshots/       Captured execution and validation evidence
+|
 +-- scripts/
 |   Validation and analysis utilities
 |
 |   +-- validate_results_consistency.py
+|   +-- save_screenshot.ps1
+|   +-- show_decision_trace.py
+|   +-- show_resource_overhead.py
 |
 +-- tests/
 |   Automated tests covering functionality and security gates
@@ -242,6 +256,7 @@ SafeMode/
 | Inspect raw evidence                | `data/events/` and `data/experiments/`    |
 | Review research results             | `data/results/` and `docs/research/`      |
 | Review security verification        | `tests/` and `docs/security/`             |
+| Inspect execution logs & screenshots| `evidence/logs/` and `evidence/screenshots/` |
 | Reproduce result consistency checks | `scripts/validate_results_consistency.py` |
 
 This structure keeps **implementation**, **experimental evidence**, and **validation evidence** separate, making the prototype easier to inspect and reproduce.

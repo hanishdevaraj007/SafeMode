@@ -1,0 +1,32 @@
+{
+  "run_id": "8a8cb98e-a8a1-4dc6-83e5-b1fe2de632ca",
+  "scenario": "DECOY_AVOIDANCE",
+  "scenario_type": "ATTACK_SIMULATION",
+  "detector_mode": "STATEFUL_MULTI_TIMESCALE",
+  "detector_version": "SM-AY26-FINAL-v1",
+  "duration_seconds": 2.63,
+  "outcome": {
+    "high_confidence_reached": true,
+    "first_high_confidence_time_seconds": 2.12,
+    "final_state": "CONTAINMENT_PENDING",
+    "max_score": 100.0,
+    "decoy_interaction": false
+  },
+  "files": {
+    "intended": 5,
+    "affected": 15
+  },
+  "resource_usage": {
+    "average_cpu_percent": 32.49,
+    "max_cpu_percent": 93.3,
+    "average_rss_mb": 71.98,
+    "max_rss_mb": 71.99
+  },
+  "containment": {
+    "requested": true,
+    "action": "DRY_RUN",
+    "result": "SUCCESS"
+  },
+  "validity": "SUCCESS",
+  "error_message": null
+}

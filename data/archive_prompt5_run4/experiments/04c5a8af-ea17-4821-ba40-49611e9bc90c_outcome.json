@@ -1,0 +1,32 @@
+{
+  "run_id": "04c5a8af-ea17-4821-ba40-49611e9bc90c",
+  "scenario": "BENIGN_RENAME_BATCH",
+  "scenario_type": "BENIGN",
+  "detector_mode": "STATEFUL_MULTI_TIMESCALE",
+  "detector_version": "SM-AY26-FINAL-v1",
+  "duration_seconds": 1.92,
+  "outcome": {
+    "high_confidence_reached": false,
+    "first_high_confidence_time_seconds": null,
+    "final_state": "IDLE",
+    "max_score": 0.0,
+    "decoy_interaction": false
+  },
+  "files": {
+    "intended": 10,
+    "affected": 0
+  },
+  "resource_usage": {
+    "average_cpu_percent": 4.06,
+    "max_cpu_percent": 7.6,
+    "average_rss_mb": 71.94,
+    "max_rss_mb": 71.95
+  },
+  "containment": {
+    "requested": true,
+    "action": "DRY_RUN",
+    "result": "SUCCESS"
+  },
+  "validity": "SUCCESS",
+  "error_message": null
+}
